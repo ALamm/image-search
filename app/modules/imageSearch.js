@@ -64,6 +64,7 @@ module.exports = function (req,res) {
 
     });	
 
+    // GOOGLE CUSTOM SEARCH ENGINE.  DEVELOPER TOOL.  SEE: https://developers.google.com/apis-explorer/#p/customsearch/v1/search.cse.list?q=monkey+mice&cx=005534600515625453000%253Aejzuuniklui&fileType=+bmp%252C+gif%252C+png%252C+jpg&num=5&fields=items(link%252Cpagemap%252Csnippet)&_h=11&
 	// Google Custom Search Engine API & Custom Search key. The API key is safe for embedding in URLs, it doesn't need any encoding.
 	var cseid = "AIzaSyBhq-DFox5DCEAkQTBq77bGWphV-8mc5cs";  // API key
 	var cx = "005534600515625453000:ejzuuniklui"; // Custom Search key
@@ -106,13 +107,14 @@ module.exports = function (req,res) {
         	            url: url,
         	            snippet:  snippet,
         	            thumbnail: thumbnail,
-        	            context: context };
-            	         
-	         JSON.stringify(obj);
+        	            context: context 
+	            
+	        };
+
 	         arr.push(obj);
 	    }
 	    
         console.log(arr);
-	    res.send(JSON.stringify(arr));
+	    res.json(arr);  // Express has built in JSON formatting
 	});        
 };

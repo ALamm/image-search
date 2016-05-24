@@ -2,6 +2,8 @@
 
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var imageSearch = require(path + '/app/modules/imageSearch.js');
+var searchHistory = require(path + '/app/modules/searchHistory.js');
 
 module.exports = function (app, passport) {
 
@@ -19,7 +21,17 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/index.html');
 		});
+		
+	app.route('/api/imagesearch/*')
+		.get(function(req, res) {
+		    imageSearch(req,res);
+		});
 
+	app.route('/api/latest/imagesearch')
+		.get(function(req, res) {
+		    searchHistory(req,res);
+		})		
+		
 	app.route('/login')
 		.get(function (req, res) {
 			res.sendFile(path + '/public/login.html');
@@ -54,4 +66,9 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, clickHandler.getClicks)
 		.post(isLoggedIn, clickHandler.addClick)
 		.delete(isLoggedIn, clickHandler.resetClicks);
+		
+	app.route('*')
+		.get(isLoggedIn, function (req, res) {
+			res.sendFile(path + '/public/index.html');
+		});
 };

@@ -5,7 +5,7 @@ var routes = require('./app/routes/index.js');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
-var changeme = require('./app/modules/changeme');
+
 
 var app = express();
 require('dotenv').load();
@@ -26,11 +26,25 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.get('/api/latest/imagesearch', function (req,res) {
+	
+// 	var db = mongoose.connection;
+//     db.on('error', console.error.bind(console, 'connection error:'));
+    
+//     var collection = db.collection("history");
+    
+// //    var result = {};
+    
+//     collection.find({}).toArray(function (err,docs) {
+//     if (err) console.error('find error');
+//     res.send(docs);
+//     });
+    
+// });
+
 routes(app, passport);
 
-app.all('*', function(req,res) {
-	changeme();
-})
+
 
 var port = process.env.PORT || 8080;
 app.listen(port,  function () {
